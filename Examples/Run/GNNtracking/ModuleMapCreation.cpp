@@ -61,6 +61,14 @@ int main(int argc, char* argv[]) {
     sequencer.addContextDecorator(cdr);
   }
 
+
+  // Read particles (initial states) from CSV files
+    auto particleReader = Options::readCsvParticleReaderConfig(vm);
+    particleReader.inputStem = "particles_initial";
+    particleReader.outputParticles = "particles_initial";
+    sequencer.addReader(
+        std::make_shared<CsvParticleReader>(particleReader, logLevel));
+
     // Read hits collection
     auto hitReader = Options::readCsvHitReaderConfig(vm);
     hitReader.outputHits_map = "hits";
