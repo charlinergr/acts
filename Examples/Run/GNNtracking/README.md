@@ -33,7 +33,7 @@ To create the module map:
 
 ```
 
-build/bin/ActsRecGNNTracks \
+build/bin/ActsRecModuleMapCreation \
     --input-dir=INPUT_DIR_DATA \
     --output-dir=OUTPUT_DIR_MODULE_MAP \
     --min-pt-cut=0.5 \
