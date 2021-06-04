@@ -63,8 +63,8 @@ int main(int argc, char* argv[]) {
 
     // Read hits collection
     auto hitReader = Options::readCsvHitReaderConfig(vm);
-    //hitReader.outputHits_map = "hits";
-    //hitReader.outputHits_vec = "hitsPID";
+    hitReader.outputHits_map = "hits";
+    hitReader.outputHits_vec = "hitsPID";
     sequencer.addReader(
     std::make_shared<CsvHitReader>(hitReader, logLevel));
 
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     auto giveCutsValues = vm["give-cut-values"].as<bool>();
     // Module map creator script
     ModuleMapCreatorWriter::Config ModuleMapWriterConfig;
-    //ModuleMapWriterConfig.trackingGeometry = trackingGeometry;
+    ModuleMapWriterConfig.trackingGeometry = trackingGeometry;
     ModuleMapWriterConfig.inputDir=inputDir;
     ModuleMapWriterConfig.minPt = minPt;
     ModuleMapWriterConfig.outputDir = outputDir;
