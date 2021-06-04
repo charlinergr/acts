@@ -60,33 +60,30 @@ int main(int argc, char* argv[]) {
   for (auto cdr : geometry.second) {
     sequencer.addContextDecorator(cdr);
   }
-  if (true) {
 
     // Read hits collection
-    auto hitReader = Options::readCsvHitReaderConfig(vm);
-    hitReader.outputHits_map = "hits";
-    hitReader.outputHits_vec = "hitsPID";
+    auto hitReader = Options::readCsvHitReaderConfig_athenaDataCsv(vm);
+    //hitReader.outputHits_map = "hits";
+    //hitReader.outputHits_vec = "hitsPID";
     sequencer.addReader(
-    std::make_shared<CsvHitReader>(hitReader, logLevel));
-    
-    //GraphCreator
-    auto inputModuleMap = vm["input-module-map"].template as<std::string>();
-    auto trueGraph = vm["give-true-graph"].as<bool>();
-    auto saveGraph = vm["save-graph-on-disk"].as<bool>();
+    std::make_shared<CsvHitReader_athenaDataCsv>(hitReader, logLevel));
+
+    //Module Map Creator
     auto minPt = vm["min-pt-cut"].as<float>();
     auto minNHits = vm["min-nhits"].as<long unsigned int>();
-    // Build graphs
-    GraphCreatorWriter::Config GraphCreatorConfig;
-    GraphCreatorConfig.inputDir = inputDir;
-    GraphCreatorConfig.outputDir = outputDir;
-    GraphCreatorConfig.trueGraph = trueGraph;
-    GraphCreatorConfig.inputModuleMap = inputModuleMap;
-    GraphCreatorConfig.saveGraph = saveGraph;
-    GraphCreatorConfig.minNHits = minNHits;
-    GraphCreatorConfig.minPt = minPt;
+    auto rootName = vm["root-filename"].as<std::string>();
+    auto giveCutsValues = vm["give-cut-values"].as<bool>();
+    // Module map creator script
+    ModuleMapCreatorWriter_athenaDataCsv::Config ModuleMapWriterConfig;
+    //ModuleMapWriterConfig.trackingGeometry = trackingGeometry;
+    ModuleMapWriterConfig.inputDir=inputDir;
+    ModuleMapWriterConfig.minPt = minPt;
+    ModuleMapWriterConfig.outputDir = outputDir;
+    ModuleMapWriterConfig.minNHits = minNHits;
+    ModuleMapWriterConfig.rootName = rootName;
+    ModuleMapWriterConfig.giveCutsValues = giveCutsValues;
     sequencer.addWriter(
-        std::make_shared<GraphCreatorWriter>(GraphCreatorConfig, logLevel));
-  }
+        std::make_shared<ModuleMapCreatorWriter_athenaDataCsv>(ModuleMapWriterConfig, logLevel));
   
   return sequencer.run();
 }
