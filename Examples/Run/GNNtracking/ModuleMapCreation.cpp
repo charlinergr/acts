@@ -62,11 +62,11 @@ int main(int argc, char* argv[]) {
   }
 
     // Read hits collection
-    auto hitReader = Options::readCsvHitReaderConfig_athenaDataCsv(vm);
+    auto hitReader = Options::readCsvHitReaderConfig(vm);
     //hitReader.outputHits_map = "hits";
     //hitReader.outputHits_vec = "hitsPID";
     sequencer.addReader(
-    std::make_shared<CsvHitReader_athenaDataCsv>(hitReader, logLevel));
+    std::make_shared<CsvHitReader>(hitReader, logLevel));
 
     //Module Map Creator
     auto minPt = vm["min-pt-cut"].as<float>();
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     auto rootName = vm["root-filename"].as<std::string>();
     auto giveCutsValues = vm["give-cut-values"].as<bool>();
     // Module map creator script
-    ModuleMapCreatorWriter_athenaDataCsv::Config ModuleMapWriterConfig;
+    ModuleMapCreatorWriter::Config ModuleMapWriterConfig;
     //ModuleMapWriterConfig.trackingGeometry = trackingGeometry;
     ModuleMapWriterConfig.inputDir=inputDir;
     ModuleMapWriterConfig.minPt = minPt;
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
     ModuleMapWriterConfig.rootName = rootName;
     ModuleMapWriterConfig.giveCutsValues = giveCutsValues;
     sequencer.addWriter(
-        std::make_shared<ModuleMapCreatorWriter_athenaDataCsv>(ModuleMapWriterConfig, logLevel));
+        std::make_shared<ModuleMapCreatorWriter>(ModuleMapWriterConfig, logLevel));
   
   return sequencer.run();
 }
