@@ -78,3 +78,6 @@ With:
   * min-nhits: the minimum number of hits a simulated particles must have
 
 
+    All configurations given in example are the one used to produce all results presented in: https://arxiv.org/abs/2103.00916
+
+
