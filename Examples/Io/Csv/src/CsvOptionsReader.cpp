@@ -45,3 +45,12 @@ ActsExamples::Options::readCsvPlanarClusterReaderConfig(const Variables& vm) {
   }
   return cfg;
 }
+
+ActsExamples::CsvHitReader::Config
+ActsExamples::Options::readCsvHitReaderConfig(const Variables& vm) {
+  ActsExamples::CsvHitReader::Config cfg;
+  if (not vm["input-dir"].empty()) {
+    cfg.inputDir = vm["input-dir"].as<std::string>();
+  }
+  return cfg;
+}
